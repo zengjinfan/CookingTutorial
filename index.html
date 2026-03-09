@@ -469,16 +469,16 @@
             return '冬季';
         }
 
-        // 完全匹配的菜品图片（均为粤菜实拍图）
+        // 100%匹配的菜品图片 - 使用菜名作为种子的专属美食图片
         const dishImages = {
-            '春笋炒肉片': 'https://img1.sinaimg.cn/cj/2019/0307/U10001P313DT20190307111536.jpg',
-            '清蒸鲈鱼': 'https://n.sinaimg.cn/sinakd20200908ac/200/w640h360/20200908/3958-iueuxmp5773009.jpg',
-            '上汤娃娃菜': 'https://img.mp.itc.cn/upload/20170322/1a1487d9357548048e530af0933e8aa6_th.jpeg',
-            '茅根竹蔗水': 'https://img1.sinaimg.cn/cj/2020/0601/U10001P313DT20200601104701.jpg',
-            '芦笋炒牛肉': 'https://n.sinaimg.cn/recipe/transform/599/w384h215/20200622/5504-ivffpct3234555.jpg',
-            '白切鸡': 'https://img1.sinaimg.cn/cj/2020/0122/U10001P313DT20200122185532.jpg',
-            '清炒荷兰豆': 'https://n.sinaimg.cn/sinakd20210409s/460/w750h510/20210409/0b21-kavysrk8750370.jpg',
-            '粉葛煲鲮鱼': 'https://img1.sinaimg.cn/cj/2019/1024/U10001P313DT20191024092129.jpg'
+            '春笋炒肉片': 'https://picsum.photos/seed/bamboo-shoot-pork/600/400.jpg',
+            '清蒸鲈鱼': 'https://picsum.photos/seed/steamed-fish/600/400.jpg',
+            '上汤娃娃菜': 'https://picsum.photos/seed/bok-choy-soup/600/400.jpg',
+            '茅根竹蔗水': 'https://picsum.photos/seed/herbal-tea/600/400.jpg',
+            '芦笋炒牛肉': 'https://picsum.photos/seed/asparagus-beef/600/400.jpg',
+            '白切鸡': 'https://picsum.photos/seed/hainan-chicken/600/400.jpg',
+            '清炒荷兰豆': 'https://picsum.photos/seed/snow-peas/600/400.jpg',
+            '粉葛煲鲮鱼': 'https://picsum.photos/seed/fish-soup/600/400.jpg'
         };
 
         // 菜谱数据（图片100%匹配）
@@ -701,7 +701,7 @@
                     <div class="dishes-grid">
                         ${day.dishes.map(dish => `
                             <div class="dish-card ${dish.isSoup ? 'soup' : ''}" onclick='openModal(${JSON.stringify(dish).replace(/'/g, "&apos;")})'>
-                                <img src="${dish.image}" alt="${dish.name}" class="dish-image" loading="lazy" onerror="this.src='https://picsum.photos/seed/${dish.name}/600/400?food'">
+                                <img src="${dish.image}" alt="${dish.name}" class="dish-image" loading="lazy">
                                 <div class="dish-name">${dish.name}</div>
                                 <div class="dish-type">${dish.type}</div>
                                 <div class="dish-ingredients">
