@@ -150,7 +150,7 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 15px;
-            background: #fff;
+            background: #f5f5f5;
         }
 
         .dish-name {
@@ -469,7 +469,10 @@
             return '冬季';
         }
 
-        // 菜谱数据（使用本地图片路径）
+        // 使用可靠的CDN图片源
+        const imageCDN = 'https://images.unsplash.com/';
+
+        // 菜谱数据（使用可靠的图片链接）
         const recipes = {
             '春季': [
                 {
@@ -483,7 +486,7 @@
                                     type: '主菜', 
                                     ingredients: '春笋300g、猪肉200g、青红椒各1个、蒜3瓣、姜2片', 
                                     tips: '春笋先焯水去涩味，炒的时候加少许料酒去腥',
-                                    image: 'assets/images/chunsun-chaoroupian.jpg',
+                                    image: imageCDN + 'photo-1567620905732-2d1ec7ab7445?w=600&h=400&fit=crop',
                                     steps: [
                                         '春笋去皮切片，放入开水中焯水5分钟，捞出过凉水沥干',
                                         '猪肉切片，用生抽、淀粉、料酒腌制10分钟',
@@ -499,7 +502,7 @@
                                     type: '主菜', 
                                     ingredients: '鲈鱼1条（约500g）、姜1块、葱3根、蒸鱼豉油2勺、食用油2勺', 
                                     tips: '水开后蒸8分钟即可，时间太长鱼肉会老',
-                                    image: 'assets/images/qingzheng-luyu.jpg',
+                                    image: imageCDN + 'photo-1565299624946-b28f40a0ae38?w=600&h=400&fit=crop',
                                     steps: [
                                         '鲈鱼处理干净，在鱼身上切几刀方便入味',
                                         '姜切片，葱切段，一部分塞入鱼肚，一部分铺在鱼身上',
@@ -514,7 +517,7 @@
                                     type: '素菜', 
                                     ingredients: '娃娃菜1颗、皮蛋1个、咸蛋1个、瘦肉50g、蒜3瓣、高汤适量', 
                                     tips: '用骨头高汤煮更鲜美，没有的话用清水也可以',
-                                    image: 'assets/images/shangtang-wawacai.jpg',
+                                    image: imageCDN + 'photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop',
                                     steps: [
                                         '娃娃菜洗净，切成4瓣备用',
                                         '皮蛋、咸蛋切成小丁，瘦肉切末，蒜切片',
@@ -531,7 +534,7 @@
                                     ingredients: '茅根100g、竹蔗200g、胡萝卜1根、马蹄10个、冰糖适量', 
                                     tips: '慢火煲1小时，清热润肺，春天喝最好',
                                     isSoup: true,
-                                    image: 'assets/images/maogen-zhuzheshui.jpg',
+                                    image: imageCDN + 'photo-1556679343-adc6353b0c82?w=600&h=400&fit=crop',
                                     steps: [
                                         '茅根洗净切段，竹蔗削皮切段，胡萝卜去皮切块，马蹄去皮',
                                         '所有材料放入汤煲，加入适量清水，大火烧开',
@@ -550,7 +553,7 @@
                                     type: '主菜', 
                                     ingredients: '芦笋200g、牛肉200g、姜片3片、蒜2瓣、黑胡椒少许', 
                                     tips: '牛肉用生抽、淀粉、油腌制15分钟会更嫩滑',
-                                    image: 'assets/images/lusun-chaoniurou.jpg',
+                                    image: imageCDN + 'photo-1565557623262-b51c2513a641?w=600&h=400&fit=crop',
                                     steps: [
                                         '芦笋去掉老根，切段，放入开水中焯水1分钟捞出过凉水',
                                         '牛肉切薄片，用生抽、淀粉、料酒、少许油腌制15分钟',
@@ -566,7 +569,7 @@
                                     type: '主菜', 
                                     ingredients: '三黄鸡1只（约1kg）、姜1块、葱1把、盐适量、蘸料：姜蓉、葱蓉、生抽、花生油', 
                                     tips: '浸煮15分钟，过冰水皮更爽脆',
-                                    image: 'assets/images/baiqieji.jpg',
+                                    image: imageCDN + 'photo-1598515214211-894b29f276ef?w=600&h=400&fit=crop',
                                     steps: [
                                         '鸡处理干净，姜拍扁，葱打结',
                                         '锅中放足够的水，加入姜、葱、适量盐，大火烧开',
@@ -581,7 +584,7 @@
                                     type: '素菜', 
                                     ingredients: '荷兰豆250g、蒜蓉适量、盐少许', 
                                     tips: '大火快炒保持脆嫩，不要炒太久',
-                                    image: 'assets/images/qingchao-helandou.jpg',
+                                    image: imageCDN + 'photo-1587593810354-3a7c3b3bb43b?w=600&h=400&fit=crop',
                                     steps: [
                                         '荷兰豆去筋，洗净沥干',
                                         '蒜蓉切末备用',
@@ -596,7 +599,7 @@
                                     ingredients: '粉葛500g、鲮鱼2条、赤小豆50g、蜜枣2个、姜2片', 
                                     tips: '鲮鱼先煎香再煲汤，汤更香浓',
                                     isSoup: true,
-                                    image: 'assets/images/fenge-baolingyutang.jpg',
+                                    image: imageCDN + 'photo-1547592166-23ac45744acd?w=600&h=400&fit=crop',
                                     steps: [
                                         '粉葛去皮切块，赤小豆提前浸泡1小时',
                                         '鲮鱼处理干净，擦干水分',
@@ -689,7 +692,7 @@
                     <div class="dishes-grid">
                         ${day.dishes.map(dish => `
                             <div class="dish-card ${dish.isSoup ? 'soup' : ''}" onclick='openModal(${JSON.stringify(dish).replace(/'/g, "&apos;")})'>
-                                <img src="${dish.image}" alt="${dish.name}" class="dish-image" loading="lazy">
+                                <img src="${dish.image}" alt="${dish.name}" class="dish-image" loading="lazy" onerror="this.src='https://picsum.photos/600/400?food'">
                                 <div class="dish-name">${dish.name}</div>
                                 <div class="dish-type">${dish.type}</div>
                                 <div class="dish-ingredients">
