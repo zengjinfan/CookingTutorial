@@ -1,13 +1,376 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>广东家常菜谱 - 三菜一汤每周不重样</title>
-    <script type="module" crossorigin src="./assets/index-eWom1j5k.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-B3AAMq0L.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .season-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .week-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .week-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .week-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .week-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .day-menu {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .day-menu:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .day-header h2 {
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .season-indicator {
+            background: #f093fb;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .dish-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .dish-card.soup {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .dish-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dish-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .dish-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .dish-ingredients {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .dish-tips {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .dishes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-menu {
+                padding: 20px;
+            }
+            
+            .week-selector {
+                gap: 8px;
+            }
+            
+            .week-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍲 广东家常菜谱</h1>
+            <p>每周三菜一汤 · 营养搭配 · 不重样</p>
+            <div class="season-tag" id="currentSeason">
+                当前季节：春季 · 当季食材推荐
+            </div>
+        </header>
+
+        <div class="week-selector" id="weekSelector">
+            <button class="week-btn active" data-week="0">第 1 周</button>
+            <button class="week-btn" data-week="1">第 2 周</button>
+        </div>
+
+        <div class="menu-container" id="menuContainer">
+            <!-- 菜单内容通过JS动态生成 -->
+        </div>
+
+        <footer>
+            <p>© 2024 广东家常菜谱 · 每月更新50%新菜式 · 应季食材更健康</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+                小贴士：每周更换菜单，每月重复率不超过50%，确保营养均衡
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 获取当前季节
+        function getCurrentSeason() {
+            const month = new Date().getMonth() + 1;
+            if ([3, 4, 5].includes(month)) return '春季';
+            if ([6, 7, 8].includes(month)) return '夏季';
+            if ([9, 10, 11].includes(month)) return '秋季';
+            return '冬季';
+        }
+
+        // 菜谱数据
+        const recipes = {
+            '春季': [
+                {
+                    week: 1,
+                    days: [
+                        {
+                            day: '星期一',
+                            dishes: [
+                                { name: '春笋炒肉片', type: '主菜', ingredients: '春笋、猪肉、青红椒', tips: '春笋先焯水去涩味' },
+                                { name: '清蒸鲈鱼', type: '主菜', ingredients: '鲈鱼、姜葱、蒸鱼豉油', tips: '水开后蒸8分钟即可' },
+                                { name: '上汤娃娃菜', type: '素菜', ingredients: '娃娃菜、皮蛋、咸蛋', tips: '用高汤煮更鲜美' },
+                                { name: '茅根竹蔗水', type: '汤品', ingredients: '茅根、竹蔗、胡萝卜、马蹄', tips: '慢火煲1小时', isSoup: true }
+                            ]
+                        },
+                        {
+                            day: '星期二',
+                            dishes: [
+                                { name: '芦笋炒牛肉', type: '主菜', ingredients: '芦笋、牛肉、姜片', tips: '牛肉用生抽淀粉腌制15分钟' },
+                                { name: '白切鸡', type: '主菜', ingredients: '三黄鸡、姜葱', tips: '浸煮15分钟，过冰水皮更爽' },
+                                { name: '清炒荷兰豆', type: '素菜', ingredients: '荷兰豆、蒜蓉', tips: '大火快炒保持脆嫩' },
+                                { name: '粉葛煲鲮鱼', type: '汤品', ingredients: '粉葛、鲮鱼、赤小豆', tips: '鲮鱼先煎香再煲汤', isSoup: true }
+                            ]
+                        },
+                        {
+                            day: '星期三',
+                            dishes: [
+                                { name: '荞菜炒烧肉', type: '主菜', ingredients: '荞菜、烧肉、红椒', tips: '荞菜不要炒太熟' },
+                                { name: '蒜蓉开边虾', type: '主菜', ingredients: '鲜虾、蒜蓉、粉丝', tips: '蒸5分钟即可' },
+                                { name: '清炒豆苗', type: '素菜', ingredients: '豆苗、蒜蓉', tips: '加少许白酒更香' },
+                                { name: '椰子煲鸡汤', type: '汤品', ingredients: '椰子、老鸡、瘦肉', tips: '用老椰子味道更香浓', isSoup: true }
+                            ]
+                        },
+                        {
+                            day: '星期四',
+                            dishes: [
+                                { name: '梅子蒸排骨', type: '主菜', ingredients: '排骨、酸梅、姜丝', tips: '蒸20分钟，酸甜开胃' },
+                                { name: '煎酿三宝', type: '主菜', ingredients: '茄子、苦瓜、青椒、鱼肉', tips: '慢火煎至两面金黄' },
+                                { name: '蒜蓉炒生菜', type: '素菜', ingredients: '生菜、蒜蓉', tips: '大火快炒保持脆嫩' },
+                                { name: '鸡骨草煲猪横脷', type: '汤品', ingredients: '鸡骨草、猪横脷、蜜枣', tips: '清热祛湿，适合春天', isSoup: true }
+                            ]
+                        },
+                        {
+                            day: '星期五',
+                            dishes: [
+                                { name: '鲜菇炒肉片', type: '主菜', ingredients: '鲜菇、猪肉、葱段', tips: '鲜菇先焯水去草腥味' },
+                                { name: '豉油鸡', type: '主菜', ingredients: '鸡、生抽、冰糖', tips: '慢火浸煮，皮色红亮' },
+                                { name: '清炒芥兰', type: '素菜', ingredients: '芥兰、姜、酒', tips: '加少许糖中和苦味' },
+                                { name: '西洋菜煲陈肾', type: '汤品', ingredients: '西洋菜、陈肾、蜜枣', tips: '清热润肺', isSoup: true }
+                            ]
+                        },
+                        {
+                            day: '星期六',
+                            dishes: [
+                                { name: '菠萝炒牛肉', type: '主菜', ingredients: '菠萝、牛肉、青红椒', tips: '牛肉要嫩滑' },
+                                { name: '蒸水蛋', type: '主菜', ingredients: '鸡蛋、温水、生抽', tips: '过筛后蒸更滑嫩' },
+                                { name: '蚝油鲜菇', type: '素菜', ingredients: '鲜菇、蚝油、葱段', tips: '简单美味' },
+                                { name: '五指毛桃煲鸡汤', type: '汤品', ingredients: '五指毛桃、老鸡、瘦肉', tips: '椰香浓郁，健脾化湿', isSoup: true }
+                            ]
+                        },
+                        {
+                            day: '星期日',
+                            dishes: [
+                                { name: '支竹羊腩煲', type: '主菜', ingredients: '羊腩、支竹、马蹄', tips: '慢火焖1小时，暖身暖胃' },
+                                { name: '煎焗鱼腩', type: '主菜', ingredients: '鲩鱼腩、姜葱', tips: '皮煎至金黄酥脆' },
+                                { name: '清炒莴笋丝', type: '素菜', ingredients: '莴笋、蒜蓉、红椒', tips: '爽脆清甜' },
+                                { name: '胡萝卜玉米排骨汤', type: '汤品', ingredients: '胡萝卜、玉米、排骨', tips: '清甜可口，老少咸宜', isSoup: true }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const currentSeason = getCurrentSeason();
+        const seasonRecipes = recipes[currentSeason] || recipes['春季'];
+        let selectedWeek = 0;
+
+        // 渲染菜单
+        function renderMenu() {
+            const container = document.getElementById('menuContainer');
+            container.innerHTML = '';
+
+            seasonRecipes[selectedWeek].days.forEach(day => {
+                const dayMenu = document.createElement('div');
+                dayMenu.className = 'day-menu';
+                
+                dayMenu.innerHTML = `
+                    <div class="day-header">
+                        <h2>${day.day}</h2>
+                        <span class="season-indicator">${currentSeason}推荐</span>
+                    </div>
+                    <div class="dishes-grid">
+                        ${day.dishes.map(dish => `
+                            <div class="dish-card ${dish.isSoup ? 'soup' : ''}">
+                                <div class="dish-name">${dish.name}</div>
+                                <div class="dish-type">${dish.type}</div>
+                                <div class="dish-ingredients">
+                                    <strong>食材：</strong>${dish.ingredients}
+                                </div>
+                                <div class="dish-tips">
+                                    💡 ${dish.tips}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                container.appendChild(dayMenu);
+            });
+        }
+
+        // 初始化
+        document.getElementById('currentSeason').textContent = `当前季节：${currentSeason} · 当季食材推荐`;
+        
+        // 周切换事件
+        document.querySelectorAll('.week-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedWeek = parseInt(btn.dataset.week);
+                renderMenu();
+            });
+        });
+
+        // 首次渲染
+        renderMenu();
+    </script>
+</body>
 </html>
