@@ -122,7 +122,7 @@
 
         .dishes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
@@ -131,6 +131,8 @@
             border-radius: 12px;
             padding: 20px;
             transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
         }
 
         .dish-card.soup {
@@ -138,8 +140,17 @@
         }
 
         .dish-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #fff;
         }
 
         .dish-name {
@@ -175,6 +186,171 @@
             border-radius: 8px;
         }
 
+        .click-hint {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-dish-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+
+        .modal-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ingredients-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .ingredients-list li {
+            background: #f8f9ff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+            line-height: 1.6;
+        }
+
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .tips-section {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-section h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
         footer {
             text-align: center;
             margin-top: 50px;
@@ -204,6 +380,27 @@
                 padding: 8px 15px;
                 font-size: 0.9rem;
             }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+
+            .modal-header {
+                padding: 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-dish-image {
+                height: 200px;
+            }
         }
     </style>
 </head>
@@ -229,9 +426,37 @@
         <footer>
             <p>© 2024 广东家常菜谱 · 每月更新50%新菜式 · 应季食材更健康</p>
             <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
-                小贴士：每周更换菜单，每月重复率不超过50%，确保营养均衡
+                小贴士：点击任意菜谱卡片查看详细做法和步骤
             </p>
         </footer>
+    </div>
+
+    <!-- 菜谱详情弹窗 -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">菜谱详情</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="" class="modal-dish-image">
+                
+                <div class="modal-section">
+                    <h3>🥗 食材准备</h3>
+                    <ul id="modalIngredients" class="ingredients-list"></ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>👩🍳 烹饪步骤</h3>
+                    <ol id="modalSteps" class="steps-list"></ol>
+                </div>
+
+                <div class="modal-section tips-section">
+                    <h3>💡 烹饪小贴士</h3>
+                    <p id="modalTips"></p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -244,7 +469,7 @@
             return '冬季';
         }
 
-        // 菜谱数据
+        // 菜谱数据（包含详细步骤和图片）
         const recipes = {
             '春季': [
                 {
@@ -253,64 +478,134 @@
                         {
                             day: '星期一',
                             dishes: [
-                                { name: '春笋炒肉片', type: '主菜', ingredients: '春笋、猪肉、青红椒', tips: '春笋先焯水去涩味' },
-                                { name: '清蒸鲈鱼', type: '主菜', ingredients: '鲈鱼、姜葱、蒸鱼豉油', tips: '水开后蒸8分钟即可' },
-                                { name: '上汤娃娃菜', type: '素菜', ingredients: '娃娃菜、皮蛋、咸蛋', tips: '用高汤煮更鲜美' },
-                                { name: '茅根竹蔗水', type: '汤品', ingredients: '茅根、竹蔗、胡萝卜、马蹄', tips: '慢火煲1小时', isSoup: true }
+                                { 
+                                    name: '春笋炒肉片', 
+                                    type: '主菜', 
+                                    ingredients: '春笋300g、猪肉200g、青红椒各1个、蒜3瓣、姜2片', 
+                                    tips: '春笋先焯水去涩味，炒的时候加少许料酒去腥',
+                                    image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '春笋去皮切片，放入开水中焯水5分钟，捞出过凉水沥干',
+                                        '猪肉切片，用生抽、淀粉、料酒腌制10分钟',
+                                        '青红椒切小块，姜蒜切末备用',
+                                        '热锅凉油，放入肉片滑炒至变色盛出',
+                                        '锅中留底油，爆香姜蒜，放入春笋翻炒2分钟',
+                                        '加入青红椒和肉片，加生抽、盐、少许糖调味',
+                                        '大火翻炒均匀即可出锅'
+                                    ]
+                                },
+                                { 
+                                    name: '清蒸鲈鱼', 
+                                    type: '主菜', 
+                                    ingredients: '鲈鱼1条（约500g）、姜1块、葱3根、蒸鱼豉油2勺、食用油2勺', 
+                                    tips: '水开后蒸8分钟即可，时间太长鱼肉会老',
+                                    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '鲈鱼处理干净，在鱼身上切几刀方便入味',
+                                        '姜切片，葱切段，一部分塞入鱼肚，一部分铺在鱼身上',
+                                        '水烧开后，放入鲈鱼大火蒸8分钟',
+                                        '取出鲈鱼，倒掉盘里的汁水，捡去姜葱',
+                                        '重新铺上新鲜的葱丝，淋上蒸鱼豉油',
+                                        '烧热2勺食用油，淋在葱丝上激出香味即可'
+                                    ]
+                                },
+                                { 
+                                    name: '上汤娃娃菜', 
+                                    type: '素菜', 
+                                    ingredients: '娃娃菜1颗、皮蛋1个、咸蛋1个、瘦肉50g、蒜3瓣、高汤适量', 
+                                    tips: '用骨头高汤煮更鲜美，没有的话用清水也可以',
+                                    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '娃娃菜洗净，切成4瓣备用',
+                                        '皮蛋、咸蛋切成小丁，瘦肉切末，蒜切片',
+                                        '热锅凉油，爆香蒜片，放入肉末炒至变色',
+                                        '加入皮蛋和咸蛋丁翻炒1分钟',
+                                        '加入适量高汤（或清水），大火烧开',
+                                        '放入娃娃菜，煮3-5分钟至娃娃菜变软',
+                                        '加少许盐和胡椒粉调味即可出锅'
+                                    ]
+                                },
+                                { 
+                                    name: '茅根竹蔗水', 
+                                    type: '汤品', 
+                                    ingredients: '茅根100g、竹蔗200g、胡萝卜1根、马蹄10个、冰糖适量', 
+                                    tips: '慢火煲1小时，清热润肺，春天喝最好',
+                                    isSoup: true,
+                                    image: 'https://images.unsplash.com/photo-1556679343-adc6353b0c82?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '茅根洗净切段，竹蔗削皮切段，胡萝卜去皮切块，马蹄去皮',
+                                        '所有材料放入汤煲，加入适量清水，大火烧开',
+                                        '转小火慢煲1小时',
+                                        '加入适量冰糖调味，继续煲10分钟至冰糖融化',
+                                        '晾凉后即可饮用，冰镇后口感更佳'
+                                    ]
+                                }
                             ]
                         },
                         {
                             day: '星期二',
                             dishes: [
-                                { name: '芦笋炒牛肉', type: '主菜', ingredients: '芦笋、牛肉、姜片', tips: '牛肉用生抽淀粉腌制15分钟' },
-                                { name: '白切鸡', type: '主菜', ingredients: '三黄鸡、姜葱', tips: '浸煮15分钟，过冰水皮更爽' },
-                                { name: '清炒荷兰豆', type: '素菜', ingredients: '荷兰豆、蒜蓉', tips: '大火快炒保持脆嫩' },
-                                { name: '粉葛煲鲮鱼', type: '汤品', ingredients: '粉葛、鲮鱼、赤小豆', tips: '鲮鱼先煎香再煲汤', isSoup: true }
-                            ]
-                        },
-                        {
-                            day: '星期三',
-                            dishes: [
-                                { name: '荞菜炒烧肉', type: '主菜', ingredients: '荞菜、烧肉、红椒', tips: '荞菜不要炒太熟' },
-                                { name: '蒜蓉开边虾', type: '主菜', ingredients: '鲜虾、蒜蓉、粉丝', tips: '蒸5分钟即可' },
-                                { name: '清炒豆苗', type: '素菜', ingredients: '豆苗、蒜蓉', tips: '加少许白酒更香' },
-                                { name: '椰子煲鸡汤', type: '汤品', ingredients: '椰子、老鸡、瘦肉', tips: '用老椰子味道更香浓', isSoup: true }
-                            ]
-                        },
-                        {
-                            day: '星期四',
-                            dishes: [
-                                { name: '梅子蒸排骨', type: '主菜', ingredients: '排骨、酸梅、姜丝', tips: '蒸20分钟，酸甜开胃' },
-                                { name: '煎酿三宝', type: '主菜', ingredients: '茄子、苦瓜、青椒、鱼肉', tips: '慢火煎至两面金黄' },
-                                { name: '蒜蓉炒生菜', type: '素菜', ingredients: '生菜、蒜蓉', tips: '大火快炒保持脆嫩' },
-                                { name: '鸡骨草煲猪横脷', type: '汤品', ingredients: '鸡骨草、猪横脷、蜜枣', tips: '清热祛湿，适合春天', isSoup: true }
-                            ]
-                        },
-                        {
-                            day: '星期五',
-                            dishes: [
-                                { name: '鲜菇炒肉片', type: '主菜', ingredients: '鲜菇、猪肉、葱段', tips: '鲜菇先焯水去草腥味' },
-                                { name: '豉油鸡', type: '主菜', ingredients: '鸡、生抽、冰糖', tips: '慢火浸煮，皮色红亮' },
-                                { name: '清炒芥兰', type: '素菜', ingredients: '芥兰、姜、酒', tips: '加少许糖中和苦味' },
-                                { name: '西洋菜煲陈肾', type: '汤品', ingredients: '西洋菜、陈肾、蜜枣', tips: '清热润肺', isSoup: true }
-                            ]
-                        },
-                        {
-                            day: '星期六',
-                            dishes: [
-                                { name: '菠萝炒牛肉', type: '主菜', ingredients: '菠萝、牛肉、青红椒', tips: '牛肉要嫩滑' },
-                                { name: '蒸水蛋', type: '主菜', ingredients: '鸡蛋、温水、生抽', tips: '过筛后蒸更滑嫩' },
-                                { name: '蚝油鲜菇', type: '素菜', ingredients: '鲜菇、蚝油、葱段', tips: '简单美味' },
-                                { name: '五指毛桃煲鸡汤', type: '汤品', ingredients: '五指毛桃、老鸡、瘦肉', tips: '椰香浓郁，健脾化湿', isSoup: true }
-                            ]
-                        },
-                        {
-                            day: '星期日',
-                            dishes: [
-                                { name: '支竹羊腩煲', type: '主菜', ingredients: '羊腩、支竹、马蹄', tips: '慢火焖1小时，暖身暖胃' },
-                                { name: '煎焗鱼腩', type: '主菜', ingredients: '鲩鱼腩、姜葱', tips: '皮煎至金黄酥脆' },
-                                { name: '清炒莴笋丝', type: '素菜', ingredients: '莴笋、蒜蓉、红椒', tips: '爽脆清甜' },
-                                { name: '胡萝卜玉米排骨汤', type: '汤品', ingredients: '胡萝卜、玉米、排骨', tips: '清甜可口，老少咸宜', isSoup: true }
+                                { 
+                                    name: '芦笋炒牛肉', 
+                                    type: '主菜', 
+                                    ingredients: '芦笋200g、牛肉200g、姜片3片、蒜2瓣、黑胡椒少许', 
+                                    tips: '牛肉用生抽、淀粉、油腌制15分钟会更嫩滑',
+                                    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '芦笋去掉老根，切段，放入开水中焯水1分钟捞出过凉水',
+                                        '牛肉切薄片，用生抽、淀粉、料酒、少许油腌制15分钟',
+                                        '姜蒜切片备用',
+                                        '热锅凉油，放入牛肉快速滑炒至变色盛出',
+                                        '锅中留底油，爆香姜蒜，放入芦笋翻炒1分钟',
+                                        '加入牛肉，加少许盐、黑胡椒调味',
+                                        '大火翻炒均匀即可出锅'
+                                    ]
+                                },
+                                { 
+                                    name: '白切鸡', 
+                                    type: '主菜', 
+                                    ingredients: '三黄鸡1只（约1kg）、姜1块、葱1把、盐适量、蘸料：姜蓉、葱蓉、生抽、花生油', 
+                                    tips: '浸煮15分钟，过冰水皮更爽脆',
+                                    image: 'https://images.unsplash.com/photo-1598515214211-894b29f276ef?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '鸡处理干净，姜拍扁，葱打结',
+                                        '锅中放足够的水，加入姜、葱、适量盐，大火烧开',
+                                        '放入鸡，转小火浸煮15分钟，期间把鸡提起几次倒出腔内的水',
+                                        '准备一盆冰水，鸡煮好后立即放入冰水中浸泡10分钟',
+                                        '捞出沥干，斩件装盘',
+                                        '蘸料制作：姜蓉、葱蓉加少许盐，淋上热油，加适量生抽调匀'
+                                    ]
+                                },
+                                { 
+                                    name: '清炒荷兰豆', 
+                                    type: '素菜', 
+                                    ingredients: '荷兰豆250g、蒜蓉适量、盐少许', 
+                                    tips: '大火快炒保持脆嫩，不要炒太久',
+                                    image: 'https://images.unsplash.com/photo-1587593810354-3a7c3b3bb43b?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '荷兰豆去筋，洗净沥干',
+                                        '蒜蓉切末备用',
+                                        '热锅凉油，爆香蒜蓉',
+                                        '放入荷兰豆，大火快速翻炒1-2分钟',
+                                        '加少许盐调味，翻炒均匀即可出锅'
+                                    ]
+                                },
+                                { 
+                                    name: '粉葛煲鲮鱼', 
+                                    type: '汤品', 
+                                    ingredients: '粉葛500g、鲮鱼2条、赤小豆50g、蜜枣2个、姜2片', 
+                                    tips: '鲮鱼先煎香再煲汤，汤更香浓',
+                                    isSoup: true,
+                                    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=400&fit=crop',
+                                    steps: [
+                                        '粉葛去皮切块，赤小豆提前浸泡1小时',
+                                        '鲮鱼处理干净，擦干水分',
+                                        '热锅凉油，放入鲮鱼煎至两面金黄',
+                                        '所有材料放入汤煲，加入适量清水，大火烧开',
+                                        '转小火煲2小时',
+                                        '加适量盐调味即可'
+                                    ]
+                                }
                             ]
                         }
                     ]
@@ -321,6 +616,61 @@
         const currentSeason = getCurrentSeason();
         const seasonRecipes = recipes[currentSeason] || recipes['春季'];
         let selectedWeek = 0;
+
+        // 打开菜谱详情弹窗
+        function openModal(dish) {
+            const modal = document.getElementById('recipeModal');
+            document.getElementById('modalTitle').textContent = dish.name;
+            document.getElementById('modalImage').src = dish.image;
+            document.getElementById('modalImage').alt = dish.name;
+            
+            // 填充食材
+            const ingredientsList = document.getElementById('modalIngredients');
+            ingredientsList.innerHTML = '';
+            dish.ingredients.split('、').forEach(ing => {
+                const li = document.createElement('li');
+                li.textContent = ing.trim();
+                ingredientsList.appendChild(li);
+            });
+
+            // 填充步骤
+            const stepsList = document.getElementById('modalSteps');
+            stepsList.innerHTML = '';
+            dish.steps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step;
+                stepsList.appendChild(li);
+            });
+
+            // 填充小贴士
+            document.getElementById('modalTips').textContent = dish.tips;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            const modal = document.getElementById('recipeModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击弹窗外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('recipeModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // ESC键关闭弹窗
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {
+                closeModal();
+            }
+        };
 
         // 渲染菜单
         function renderMenu() {
@@ -338,15 +688,17 @@
                     </div>
                     <div class="dishes-grid">
                         ${day.dishes.map(dish => `
-                            <div class="dish-card ${dish.isSoup ? 'soup' : ''}">
+                            <div class="dish-card ${dish.isSoup ? 'soup' : ''}" onclick='openModal(${JSON.stringify(dish).replace(/'/g, "&apos;")})'>
+                                <img src="${dish.image}" alt="${dish.name}" class="dish-image" loading="lazy">
                                 <div class="dish-name">${dish.name}</div>
                                 <div class="dish-type">${dish.type}</div>
                                 <div class="dish-ingredients">
-                                    <strong>食材：</strong>${dish.ingredients}
+                                    <strong>食材：</strong>${dish.ingredients.split('、').slice(0, 3).join('、')}...
                                 </div>
                                 <div class="dish-tips">
                                     💡 ${dish.tips}
                                 </div>
+                                <div class="click-hint">👉 点击查看详细做法</div>
                             </div>
                         `).join('')}
                     </div>
